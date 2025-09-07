@@ -5,12 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c259e1f3-883c-44d8-aeaa-33597f287068" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PortalTrigger.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PortalTrigger.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Brackeys/2D Mega Pack/Environment/Gothic/DoorUp_NoGround.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Brackeys/2D Mega Pack/Environment/Gothic/DoorUp_NoGround.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.suprise-suprise/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.suprise-suprise/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/idle.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/idle.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprite-0001.aseprite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprite-0001.aseprite.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/debug.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/debug.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_left_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_left_down.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_left_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_left_up.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_right_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_right_down.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_right_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_right_up.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_up.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_left_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_left_down.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_left_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_left_up.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_right_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_right_down.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_right_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_right_up.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_up.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerTopDownMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerTopDownMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Hall of Fame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Hall of Fame.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +36,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="32H5hvXgt7DaS79vn3Pr3k58OU1" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -31,6 +47,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
@@ -95,6 +112,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757064799872</updated>
       <workItem from="1757064817539" duration="9542000" />
+      <workItem from="1757175993706" duration="571000" />
     </task>
     <servers />
   </component>
