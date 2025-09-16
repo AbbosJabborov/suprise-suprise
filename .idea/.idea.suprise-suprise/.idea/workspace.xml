@@ -5,28 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c259e1f3-883c-44d8-aeaa-33597f287068" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.suprise-suprise/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.suprise-suprise/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprite-0001.aseprite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprite-0001.aseprite.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/debug.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/debug.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_left_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_left_down.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_left_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_left_up.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_right_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_right_down.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_right_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_right_up.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/idle_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/idle_up.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_left_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_left_down.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_left_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_left_up.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_right_down.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_right_down.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_right_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_right_up.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/walk_up.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/walk_up.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerTopDownMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerTopDownMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/ReleaseThePrincess.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/ReleaseThePrincess.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,21 +24,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.sync",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\Abbos\6000.0.51f1\Editor\Unity.exe" />
@@ -113,6 +93,7 @@
       <updated>1757064799872</updated>
       <workItem from="1757064817539" duration="9542000" />
       <workItem from="1757175993706" duration="571000" />
+      <workItem from="1758020046492" duration="5943000" />
     </task>
     <servers />
   </component>
