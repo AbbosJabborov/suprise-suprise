@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalInteraction : MonoBehaviour
+public class PortalInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private PortalTrigger portalTrigger;
-    public void EnterRoom()
+    
+    public void Interact()
     {
         sceneLoader.LoadScene(portalTrigger.GetSceneIndex());
     }
