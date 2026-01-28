@@ -13,8 +13,8 @@ namespace Gameplay.Managers
         [SerializeField] private GameState currentState = GameState.Playing;
     
         [Header("Player Stats")]
-        [SerializeField] private int coins = 0;
-        [SerializeField] private int kills = 0;
+        [SerializeField] private int coins;
+        [SerializeField] private int kills;
         [SerializeField] private int playerLevel = 1;
         [SerializeField] private int currentXP = 0;
         [SerializeField] private int xpToNextLevel = 100;
@@ -23,6 +23,7 @@ namespace Gameplay.Managers
         [Header("References")]
         [SerializeField] private GameObject player;
         [SerializeField] private GameObject caravan;
+        [SerializeField] private CoinCountUI coinCountUI;
     
         [Header("Events")]
         public UnityEvent<int> OnCoinsChanged;
@@ -96,7 +97,7 @@ namespace Gameplay.Managers
             OnCoinsChanged.Invoke(coins);
         }
     
-        public bool SpendCoins(int amount)
+        public bool SpendCoins(int amount)  
         {
             if (coins >= amount)
             {
@@ -106,8 +107,11 @@ namespace Gameplay.Managers
             }
             return false;
         }
-    
-        public int GetCoins() => coins;
+
+        public int GetCoins()
+        {
+            return coins;
+        }
     
         // Kill tracking
         public void RegisterKill()
