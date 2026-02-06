@@ -100,7 +100,17 @@ namespace Gameplay.Managers
         
             return null;
         }
-    
+
+        // public BuildingSlot GetEmptySlot()
+        // {
+        //     foreach (var slot in buildingSlots)
+        //     {
+        //         if (slot.IsEmpty())
+        //             return slot;
+        //     }
+        //     return null;
+        // }
+        //
         public int GetSlotCount()
         {
             return buildingSlots.Length;

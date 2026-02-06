@@ -1,4 +1,3 @@
-using Gameplay.Managers;
 using UnityEngine;
 
 namespace Gameplay
@@ -12,15 +11,15 @@ namespace Gameplay
     
         [Header("Hit Effects")]
         [SerializeField] private GameObject hitEffectPrefab;
-        [SerializeField] private LayerMask enemyLayer; 
-        private float speed;
+        [SerializeField] private LayerMask enemyLayer;
     
         private Vector2 direction;
+        private float speed;
         private int damage;
         private float lifetime;
         private float spawnTime;
-
-        private void Awake()
+    
+        void Awake()
         {
             if (rb == null)
                 rb = GetComponent<Rigidbody2D>();
@@ -29,8 +28,8 @@ namespace Gameplay
             if (trailRenderer == null)
                 trailRenderer = GetComponent<TrailRenderer>();
         }
-
-        private void OnEnable()
+    
+        void OnEnable()
         {
             spawnTime = Time.time;
         
@@ -50,13 +49,13 @@ namespace Gameplay
             spawnTime = Time.time;
         
             // Set velocity
-            if (rb)
+            if (rb != null)
             {
                 rb.linearVelocity = direction * speed;
             }
         }
-
-        private void Update()
+    
+        void Update()
         {
             // Deactivate after lifetime expires
             if (Time.time - spawnTime >= lifetime)
@@ -64,11 +63,11 @@ namespace Gameplay
                 DeactivateBullet();
             }
         }
-
-        private void FixedUpdate()
+    
+        void FixedUpdate()
         {
             // Keep velocity constant (in case of physics interference)
-            if (rb)
+            if (rb != null)
             {
                 rb.linearVelocity = direction * speed;
             }
@@ -77,33 +76,30 @@ namespace Gameplay
         void OnTriggerEnter2D(Collider2D collision)
         {
             // Check if hit an enemy
-            if (collision.CompareTag("Enemy"))
+            if (((1 << collision.gameObject.layer) & enemyLayer) != 0)
             {
-                // Try built-in Enemy health first
+                // Deal damage to enemy
                 var enemy = collision.GetComponent<Enemy.Enemy>();
                 if (enemy != null)
                 {
                     enemy.TakeDamage(damage);
                 }
-        
-                // Or use Health component
-                Health health = collision.GetComponent<Health>();
-                if (health != null)
-                {
-                    health.TakeDamage(damage);
-                }
-        
-                // Register kill if dead (add to Enemy.cs Die() method)
-                if (GameManager.Instance != null && enemy != null && enemy.IsDead())
-                {
-                    GameManager.Instance.RegisterKill();
-                }
-        
+            
+                // Spawn hit effect
+                SpawnHitEffect(collision.transform.position);
+            
+                // Deactivate bullet
+                DeactivateBullet();
+            }
+            // Check if hit wall/obstacle (optional)
+            else if (collision.CompareTag("Wall") || collision.CompareTag("Obstacle"))
+            {
                 SpawnHitEffect(collision.transform.position);
                 DeactivateBullet();
             }
         }
-        private void SpawnHitEffect(Vector3 position)
+    
+        void SpawnHitEffect(Vector3 position)
         {
             if (hitEffectPrefab != null)
             {
@@ -111,8 +107,8 @@ namespace Gameplay
                 Destroy(effect, 1f); // Auto-destroy effect after 1 second
             }
         }
-
-        private void DeactivateBullet()
+    
+        void DeactivateBullet()
         {
             // Reset velocity
             if (rb != null)

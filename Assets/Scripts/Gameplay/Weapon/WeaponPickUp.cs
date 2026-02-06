@@ -1,3 +1,4 @@
+using Gameplay.Player;
 using Player;
 using UnityEngine;
 
@@ -58,19 +59,34 @@ namespace Gameplay.Weapon
     
         public void Interact(GameObject interactor)
         {
-            PlayerTopDownShooting shooting = interactor.GetComponent<PlayerTopDownShooting>();
-            if (shooting != null && weaponData != null)
+            WeaponInventory inventory = interactor.GetComponent<WeaponInventory>();
+        
+            if (inventory != null && weaponData != null)
             {
-                // Get current weapon before switching
-                WeaponData oldWeapon = shooting.GetCurrentWeapon();
+                // Try to add weapon to inventory
+                bool shouldDropWeapon = inventory.AddWeapon(weaponData);
             
-                // Switch to new weapon
-                shooting.SwitchWeapon(weaponData);
-            
-                // Drop old weapon if exists
-                if (oldWeapon != null)
+                // If inventory was full, drop the replaced weapon
+                if (shouldDropWeapon && inventory.IsFull())
                 {
-                    DropWeapon(oldWeapon, interactor.transform.position);
+                    // Get the weapon that was just replaced (current weapon before we added new one)
+                    WeaponData droppedWeapon = null;
+                
+                    // Subscribe to drop event to get the weapon
+                    UnityEngine.Events.UnityAction<WeaponData> dropHandler = null;
+                    dropHandler = (weapon) =>
+                                  {
+                                      droppedWeapon = weapon;
+                                      inventory.OnWeaponDropped.RemoveListener(dropHandler);
+                                  };
+                
+                    inventory.OnWeaponDropped.AddListener(dropHandler);
+                
+                    // The AddWeapon already triggered the event, so droppedWeapon should be set
+                    if (droppedWeapon != null)
+                    {
+                        DropWeapon(droppedWeapon, interactor.transform.position);
+                    }
                 }
             
                 // Destroy this pickup

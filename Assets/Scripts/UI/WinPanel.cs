@@ -14,7 +14,6 @@ namespace UI
         {
             Time.timeScale = 0;
             winPanel.SetActive(true);
-            
         }
     }
 }

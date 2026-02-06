@@ -20,7 +20,7 @@ namespace Gameplay
         private GameManager gm;
         private int tweenId;
 
-        void Start()
+        private void Start()
         {
             gm = gameManager ? gameManager : GameManager.Instance;
             tweenId = GetInstanceID();
@@ -31,14 +31,12 @@ namespace Gameplay
             // Initialize displayed value
             displayedCoins = gm.GetCoins();
             coinText.text = $"Coins: {displayedCoins}";
-            
         }
 
         public void SetCoins(int newAmount)
         {
             DOTween.Kill(tweenId);
-
-            // Use a local float so tween can animate smoothly and avoid weird capture of the field
+            
             float current = displayedCoins;
             DOTween.To(() => current, x =>
                                     {

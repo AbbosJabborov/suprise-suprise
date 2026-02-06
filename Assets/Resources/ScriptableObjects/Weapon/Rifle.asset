@@ -17,10 +17,13 @@ MonoBehaviour:
   bulletSpeed: 30
   damage: 30
   bulletLifetime: 2
+  knockbackForce: 5
   isShotgun: 0
   pelletCount: 0
   spreadAngle: 3
   isSingleShot: 0
+  piercingShot: 1
+  piercingCount: 2
   movementSpeedMultiplier: 0.75
   weaponSprite: {fileID: 21300000, guid: 8e6a5c62b4d31f60b8b03c09e15be314, type: 2}
   bulletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

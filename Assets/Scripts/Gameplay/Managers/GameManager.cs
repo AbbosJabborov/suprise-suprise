@@ -112,8 +112,7 @@ namespace Gameplay.Managers
         {
             return coins;
         }
-    
-        // Kill tracking
+        
         public void RegisterKill()
         {
             kills++;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Gameplay.Player
 {
     public class PlayerTopDownMovement : MonoBehaviour
     {
@@ -44,6 +44,11 @@ namespace Player
         {
             
             speedMultiplier = multiplier;
+        }
+        
+        public void AddSpeedBonus(float percentage)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006334d17eb43d79c688deee8387a36, type: 3}
+  m_Name: Flash
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Upgrades.UpgradeCardData
+  upgradeName: Flash
+  description: Increase weapon damage by 15%
+  icon: {fileID: 21300000, guid: 7029e9c2e2ad138eeb82998523a7dee3, type: 2}
+  upgradeType: 1
+  rarity: 0
+  value: 0.15
+  intValue: 0
+  cardColor: {r: 0.035294116, g: 1, b: 0.08794912, a: 1}
+  visualEffect: {fileID: 0}
+  canStack: 1
+  maxStacks: 5

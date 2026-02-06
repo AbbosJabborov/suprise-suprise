@@ -49,7 +49,7 @@ namespace Gameplay
     
         void Update()
         {
-            if (player == null || isBeingCollected)
+            if (!player || isBeingCollected)
                 return;
         
             // Rotation animation
@@ -76,7 +76,6 @@ namespace Gameplay
             }
             else
             {
-                // Slow down if not being pulled
                 rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.deltaTime * 5f);
             }
         

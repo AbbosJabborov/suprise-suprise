@@ -11,6 +11,7 @@ namespace Gameplay.Weapon
         [SerializeField] private float bulletSpeed = 20f;
         [SerializeField] private int damage = 10;
         [SerializeField] private float bulletLifetime = 3f;
+        [SerializeField] private float knockbackForce = 5f;
         
         [Header("Spread Settings")]
         [SerializeField] private bool isShotgun = false;
@@ -19,6 +20,8 @@ namespace Gameplay.Weapon
         
         [Header("Fire Mode")]
         [SerializeField] private bool isSingleShot = false; // If true, must release to shoot again
+        [SerializeField] private bool piercingShot = false;
+        [SerializeField] private int piercingCount = 1; // Number of enemies bullet can pierce through
         
         [Header("Player Movement Modifier")]
         [SerializeField] private float movementSpeedMultiplier = 1f; // 1 = normal, 0.5 = half speed when using this weapon
@@ -33,10 +36,13 @@ namespace Gameplay.Weapon
         public float BulletSpeed => bulletSpeed;
         public int Damage => damage;
         public float BulletLifetime => bulletLifetime;
+        public float KnockbackForce => knockbackForce;
         public bool IsShotgun => isShotgun;
         public int PelletCount => pelletCount;
         public float SpreadAngle => spreadAngle;
         public bool IsSingleShot => isSingleShot;
+        public bool PiercingShot => piercingShot;
+        public int PiercingCount => piercingCount;
         public float MovementSpeedMultiplier => movementSpeedMultiplier;
         public Sprite WeaponSprite => weaponSprite;
         public Color BulletColor => bulletColor;

@@ -23,7 +23,7 @@ MonoBehaviour:
   range: 8
   projectileSpeed: 20
   piercing: 1
-  piercingTargets: 3
+  piercingTargets: 2
   areaOfEffect: 0
   aoeRadius: 0
   slowsEnemies: 0

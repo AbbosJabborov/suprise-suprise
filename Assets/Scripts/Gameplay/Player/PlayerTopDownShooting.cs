@@ -1,9 +1,11 @@
-using Gameplay;
+using System;
+using System.Reflection;
 using Gameplay.Weapon;
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Gameplay.Player
 {
     public class PlayerTopDownShooting : MonoBehaviour
     {
@@ -11,11 +13,16 @@ namespace Player
         [SerializeField] private PlayerTopDownAiming aimingScript;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private GameObject bulletPrefab;
-        [SerializeField] private Transform firePoint;
-        [SerializeField] private SpriteRenderer weaponSpriteRenderer; // Visual weapon sprite
+        [SerializeField] private Transform firePoint; // Where bullets spawn
         
-        [Header("Current Weapon")]
-        [SerializeField] private WeaponData currentWeapon;
+        [Header("Weapon Settings")]
+        [SerializeField] private float fireRate = 0.2f; // Time between shots
+        [SerializeField] private float bulletSpeed = 20f;
+        [SerializeField] private int damage = 10;
+        [SerializeField] private float bulletLifetime = 3f;
+
+        private WeaponData currentWeaponData;
+        
         
         [Header("Visual/Audio")]
         [SerializeField] private ParticleSystem muzzleFlash;
@@ -23,11 +30,10 @@ namespace Player
         [SerializeField] private AudioSource audioSource;
         
         [Header("Bullet Pooling")]
-        [SerializeField] private int poolSize = 100;
+        [SerializeField] private int poolSize = 50;
         
         private float nextFireTime;
         private bool isShooting;
-        private bool wasShootingLastFrame;
         private GameObject[] bulletPool;
         private int currentBulletIndex;
         
@@ -36,13 +42,8 @@ namespace Player
             if (aimingScript == null)
                 aimingScript = GetComponent<PlayerTopDownAiming>();
             
+            // Initialize bullet pool
             InitializeBulletPool();
-            
-            // Apply weapon visual
-            if (currentWeapon != null && weaponSpriteRenderer != null && currentWeapon.WeaponSprite != null)
-            {
-                weaponSpriteRenderer.sprite = currentWeapon.WeaponSprite;
-            }
         }
         
         void Update()
@@ -52,38 +53,14 @@ namespace Player
         
         void HandleShootInput()
         {
-            if (currentWeapon == null)
-                return;
-            
-            // Get shoot input
+            // Get shoot input (left click or right trigger)
             isShooting = playerInput.actions["Shoot"].ReadValue<float>() > 0.1f;
             
-            // Check if can shoot
-            bool canShoot = Time.time >= nextFireTime;
-            
-            // Handle single shot mode
-            if (currentWeapon.IsSingleShot)
+            if (isShooting && Time.time >= nextFireTime)
             {
-                // Only shoot on button press (not hold)
-                bool justPressed = isShooting && !wasShootingLastFrame;
-                
-                if (justPressed && canShoot)
-                {
-                    Shoot();
-                    nextFireTime = Time.time + currentWeapon.FireRate;
-                }
+                Shoot();
+                nextFireTime = Time.time + fireRate;
             }
-            else
-            {
-                // Automatic fire - shoot while holding
-                if (isShooting && canShoot)
-                {
-                    Shoot();
-                    nextFireTime = Time.time + currentWeapon.FireRate;
-                }
-            }
-            
-            wasShootingLastFrame = isShooting;
         }
         
         void Shoot()
@@ -91,99 +68,29 @@ namespace Player
             Vector2 aimDirection = aimingScript.GetAimDirection();
             
             if (aimDirection.sqrMagnitude < 0.01f)
-                return;
+                return; 
             
-            if (currentWeapon.IsShotgun)
-            {
-                ShootShotgun(aimDirection);
-            }
-            else
-            {
-                ShootSingle(aimDirection);
-            }
-            
-            // Effects
-            PlayMuzzleFlash();
-            PlayShootSound();
-        }
-        
-        void ShootSingle(Vector2 aimDirection)
-        {
+            // Get bullet from pool
             GameObject bullet = GetPooledBullet();
             
             if (bullet != null)
             {
+                // Position bullet at fire point
                 bullet.transform.position = firePoint != null ? firePoint.position : transform.position;
                 bullet.transform.rotation = Quaternion.Euler(0, 0, aimingScript.GetAimAngle());
                 bullet.SetActive(true);
                 
-                // Set bullet color if available
-                SpriteRenderer bulletSprite = bullet.GetComponent<SpriteRenderer>();
-                if (bulletSprite != null)
-                {
-                    bulletSprite.color = currentWeapon.BulletColor;
-                }
-                
+                // Initialize bullet
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
                 if (bulletScript != null)
                 {
-                    bulletScript.Initialize(aimDirection, currentWeapon.BulletSpeed, currentWeapon.Damage, currentWeapon.BulletLifetime);
+                    bulletScript.Initialize(aimDirection, bulletSpeed, damage, bulletLifetime);
                 }
-            }
-        }
-        
-        void ShootShotgun(Vector2 baseDirection)
-        {
-            int pellets = currentWeapon.PelletCount;
-            float spreadAngle = currentWeapon.SpreadAngle;
-            
-            // Calculate angle step between pellets
-            float angleStep = spreadAngle / Mathf.Max(1, pellets - 1);
-            float startAngle = -spreadAngle / 2f;
-            
-            for (int i = 0; i < pellets; i++)
-            {
-                GameObject bullet = GetPooledBullet();
                 
-                if (bullet != null)
-                {
-                    // Calculate spread direction
-                    float currentAngle = startAngle + (angleStep * i);
-                    Vector2 spreadDirection = RotateVector(baseDirection, currentAngle);
-                    
-                    // Position and rotate bullet
-                    bullet.transform.position = firePoint != null ? firePoint.position : transform.position;
-                    float bulletAngle = Mathf.Atan2(spreadDirection.y, spreadDirection.x) * Mathf.Rad2Deg;
-                    bullet.transform.rotation = Quaternion.Euler(0, 0, bulletAngle);
-                    bullet.SetActive(true);
-                    
-                    // Set bullet color
-                    SpriteRenderer bulletSprite = bullet.GetComponent<SpriteRenderer>();
-                    if (bulletSprite != null)
-                    {
-                        bulletSprite.color = currentWeapon.BulletColor;
-                    }
-                    
-                    // Initialize bullet
-                    Bullet bulletScript = bullet.GetComponent<Bullet>();
-                    if (bulletScript != null)
-                    {
-                        bulletScript.Initialize(spreadDirection, currentWeapon.BulletSpeed, currentWeapon.Damage, currentWeapon.BulletLifetime);
-                    }
-                }
+                // Visual/Audio effects
+                PlayMuzzleFlash();
+                PlayShootSound();
             }
-        }
-        
-        Vector2 RotateVector(Vector2 vector, float degrees)
-        {
-            float radians = degrees * Mathf.Deg2Rad;
-            float cos = Mathf.Cos(radians);
-            float sin = Mathf.Sin(radians);
-            
-            return new Vector2(
-                vector.x * cos - vector.y * sin,
-                vector.x * sin + vector.y * cos
-            );
         }
         
         void InitializeBulletPool()
@@ -194,12 +101,13 @@ namespace Player
             {
                 bulletPool[i] = Instantiate(bulletPrefab);
                 bulletPool[i].SetActive(false);
-                bulletPool[i].transform.parent = transform;
+                bulletPool[i].transform.parent = transform; // Optional: organize in hierarchy
             }
         }
         
         GameObject GetPooledBullet()
         {
+            // Simple round-robin pooling
             for (int i = 0; i < poolSize; i++)
             {
                 currentBulletIndex = (currentBulletIndex + 1) % poolSize;
@@ -210,13 +118,14 @@ namespace Player
                 }
             }
             
+            // If all bullets are active, reuse the oldest one
             currentBulletIndex = (currentBulletIndex + 1) % poolSize;
             return bulletPool[currentBulletIndex];
         }
         
         void PlayMuzzleFlash()
         {
-            if (muzzleFlash != null)
+            if (muzzleFlash)
             {
                 muzzleFlash.Play();
             }
@@ -224,45 +133,52 @@ namespace Player
         
         void PlayShootSound()
         {
-            if (audioSource != null && shootSound != null)
+            if (audioSource && shootSound)
             {
                 audioSource.PlayOneShot(shootSound);
             }
         }
-        
-        public void SwitchWeapon(WeaponData newWeapon)
+
+        private void SetWeaponName(string newName)
         {
-            if (newWeapon == null)
-                return;
-            
-            currentWeapon = newWeapon;
-            
-            if (weaponSpriteRenderer != null && currentWeapon.WeaponSprite != null)
-            {
-                weaponSpriteRenderer.sprite = currentWeapon.WeaponSprite;
-            }
-            
-            PlayerTopDownMovement movement = GetComponent<PlayerTopDownMovement>();
-            if (movement != null)
-            {
-                movement.SetSpeedMultiplier(currentWeapon.MovementSpeedMultiplier);
-            }
-            
-            nextFireTime = 0f;
+            // This method can be expanded to update UI or other components
+            Debug.Log("Weapon name set to: " + newName);
         }
         
-        public WeaponData GetCurrentWeapon()
+        public void SwitchWeapon(WeaponData newWeaponData)
         {
-            return currentWeapon;
+            currentWeaponData = newWeaponData;
+            
+            if (currentWeaponData != null)
+            {
+                SetWeaponName(currentWeaponData.WeaponName);
+                SetFireRate(currentWeaponData.FireRate);
+                SetBulletSpeed(currentWeaponData.BulletSpeed);
+                SetDamage(currentWeaponData.Damage);
+            }
+            else
+            {
+                // Reset to default values if no weapon
+                SetWeaponName("Unarmed");
+                SetFireRate(0.5f);
+                SetBulletSpeed(10f);
+                SetDamage(1);
+            }
         }
         
-        public float GetFireCooldownPercent()
+        public void SetFireRate(float newFireRate)
         {
-            if (currentWeapon == null)
-                return 1f;
-            
-            float timeSinceLastShot = Time.time - (nextFireTime - currentWeapon.FireRate);
-            return Mathf.Clamp01(timeSinceLastShot / currentWeapon.FireRate);
+            fireRate = newFireRate;
+        }
+        
+        public void SetBulletSpeed(float newSpeed)
+        {
+            bulletSpeed = newSpeed;
+        }
+        
+        public void SetDamage(int newDamage)
+        {
+            damage = newDamage;
         }
     }
 }
