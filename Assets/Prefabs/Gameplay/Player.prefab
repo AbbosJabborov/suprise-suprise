@@ -302,15 +302,10 @@ GameObject:
   - component: {fileID: 7459463738768058271}
   - component: {fileID: 1138486788140277912}
   - component: {fileID: 5440444246529773711}
-  - component: {fileID: 7020596266606831926}
-  - component: {fileID: 3855582820866853874}
-  - component: {fileID: 1394546155128626631}
-  - component: {fileID: 6642565257783488516}
-  - component: {fileID: 6483698273961758838}
+  - component: {fileID: 3057647493680333117}
   - component: {fileID: 5311982006391124237}
-  - component: {fileID: 6745477512228692341}
-  - component: {fileID: 6599006017846954863}
-  m_Layer: 0
+  - component: {fileID: 6642565257783488516}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -433,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: add87ea234fef82f888e9d74141f11bb, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -536,12 +531,24 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 515cc5d5-9b50-45f1-b27f-3892ebe57403
     m_ActionName: 'Player/SwitchWeapon[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a757b985-fc8b-4fee-9fff-7c1e456c3f42
+    m_ActionName: 'Player/Dodge[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8fd5670b-fdb7-4b05-805f-352f256c828d
+    m_ActionName: 'Player/Melee[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f726cdb-28c0-4339-8035-dd8618c6b30d
+    m_ActionName: 'Player/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7020596266606831926
+--- !u!114 &3057647493680333117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -550,194 +557,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7922305880102640848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155a2231129c64e459ec509a21e3d977, type: 3}
+  m_Script: {fileID: 11500000, guid: 444e190da01f4284a0b6dcac89109f8c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  baseSpeed: 8
-  speedMultiplier: 1.2
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Player.PlayerController
+  playerData: {fileID: 11400000, guid: 59bb162c258adb310a3e05738c0e92a8, type: 2}
+  startingWeapon: {fileID: 11400000, guid: 2eb342c18f5d1512fafa7c3232f299df, type: 2}
   rb: {fileID: 7459463738768058271}
+  spriteRenderer: {fileID: 1262363014022336869}
   animator: {fileID: 1138486788140277912}
-  playerInput: {fileID: 5440444246529773711}
---- !u!114 &3855582820866853874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922305880102640848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb5196a1842442e6ad0f4d96ad6d09a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerTopDownAiming
-  weaponPivot: {fileID: 0}
-  weaponTip: {fileID: 0}
-  playerInput: {fileID: 5440444246529773711}
-  mainCamera: {fileID: 0}
-  smoothRotation: 1
-  rotationSpeed: 720
-  gamepadDeadzone: 0.2
-  crosshair: {fileID: 0}
-  crosshairDistance: 5
---- !u!114 &1394546155128626631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922305880102640848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb688e6e40944c9889e51613f3d778d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerTopDownShooting
-  aimingScript: {fileID: 3855582820866853874}
-  playerInput: {fileID: 5440444246529773711}
-  bulletPrefab: {fileID: 1558763807804191755, guid: c2c44e98b0cd186d2a7cf803f36c593f, type: 3}
-  firePoint: {fileID: 7682065652279475297}
-  fireRate: 0.2
-  bulletSpeed: 20
-  damage: 10
-  bulletLifetime: 3
-  muzzleFlash: {fileID: 0}
-  shootSound: {fileID: 8300000, guid: 239f7ed2cdd310ad6a2f9ac82b7c0c30, type: 3}
-  audioSource: {fileID: 6483698273961758838}
-  poolSize: 50
---- !u!114 &6642565257783488516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922305880102640848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58d5b08ef66b45acaabb6aa25af61d4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  currentHealth: 0
-  destroyOnDeath: 1
-  destroyDelay: 0
-  useInvincibilityFrames: 0
-  invincibilityDuration: 0.5
-  spriteRenderer: {fileID: 0}
-  flashOnDamage: 1
-  damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.1
-  deathEffectPrefab: {fileID: 0}
-  hurtSound: {fileID: 0}
-  deathSound: {fileID: 0}
-  audioSource: {fileID: 0}
-  OnDamaged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHealed:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!82 &6483698273961758838
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922305880102640848}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 239f7ed2cdd310ad6a2f9ac82b7c0c30, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.25
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &5311982006391124237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,7 +611,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6745477512228692341
+--- !u!114 &6642565257783488516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -793,38 +620,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7922305880102640848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ebab3a3731760b22b2fc7206432a55a, type: 3}
+  m_Script: {fileID: 11500000, guid: 58d5b08ef66b45acaabb6aa25af61d4b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Extensions.BuildingTester
-  caravan: {fileID: 0}
-  firstBuilding: {fileID: 11400000, guid: c46c7d6189978d7aa8a0a5b058da8926, type: 2}
-  secondBuilding: {fileID: 11400000, guid: a72768f9b8a21dbed95ef86bde15c7f9, type: 2}
-  thirdBuilding: {fileID: 11400000, guid: faf9ca79e6d4d7071953ec63d4d01656, type: 2}
-  fourthBuilding: {fileID: 0}
---- !u!114 &6599006017846954863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922305880102640848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631d339c30cc47b4b36de0e2c1fe52b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Weapon.WeaponInventory
-  maxWeaponSlots: 3
-  currentSlotIndex: 0
-  startingWeapon: {fileID: 11400000, guid: 1dbbbb8e14925276a8cc477455525108, type: 2}
-  shootingScript: {fileID: 1394546155128626631}
-  playerInput: {fileID: 5440444246529773711}
-  OnWeaponAdded:
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  currentHealth: 0
+  destroyOnDeath: 1
+  destroyDelay: 2
+  useInvincibilityFrames: 0
+  invincibilityDuration: 0.5
+  spriteRenderer: {fileID: 0}
+  flashOnDamage: 1
+  damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
+  deathEffectPrefab: {fileID: 0}
+  hurtSound: {fileID: 0}
+  deathSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  OnDamaged:
     m_PersistentCalls:
       m_Calls: []
-  OnWeaponSwitched:
+  OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
-  OnWeaponDropped:
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8902529582945704726

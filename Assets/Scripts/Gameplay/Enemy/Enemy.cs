@@ -1,9 +1,8 @@
 using System.Collections;
-using Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Enemy
+namespace Gameplay.Enemy
 {
     public class Enemy : MonoBehaviour
     {
@@ -28,7 +27,7 @@ namespace Enemy
 
         [Header("Target")]
         [SerializeField] private Transform target; // The caravan or player
-        [SerializeField] private bool targetPlayer = false; // If false, targets caravan
+        [SerializeField] private bool targetPlayer; // If false, targets caravan
 
         [Header("Drops")]
         [SerializeField] private GameObject coinPrefab;
@@ -46,7 +45,6 @@ namespace Enemy
 
         [Header("AI Behavior")]
         [SerializeField] private EnemyBehaviorType behaviorType = EnemyBehaviorType.Charger;
-        [SerializeField] private float wanderRadius = 3f;
         [SerializeField] private float dodgeSpeed = 5f;
         [SerializeField] private float dodgeInterval = 2f;
 
@@ -127,32 +125,26 @@ namespace Enemy
             foreach (var p in players)
             {
                 float d = (p.transform.position - (Vector3)myPos).sqrMagnitude;
-                if (d < closestDistSqr)
-                {
-                    closest = p.transform;
-                    closestDistSqr = d;
-                    closestIsPlayer = true;
-                }
+                if(!(d < closestDistSqr)) continue;
+                closest = p.transform;
+                closestDistSqr = d;
+                closestIsPlayer = true;
             }
         
             // Check all caravans
             foreach (var c in caravans)
             {
                 float d = (c.transform.position - (Vector3)myPos).sqrMagnitude;
-                if (d < closestDistSqr)
-                {
-                    closest = c.transform;
-                    closestDistSqr = d;
-                    closestIsPlayer = false;
-                }
+                if(!(d < closestDistSqr)) continue;
+                closest = c.transform;
+                closestDistSqr = d;
+                closestIsPlayer = false;
             }
         
             // If nothing found, keep inspector-assigned target (if any)
-            if (closest != null)
-            {
-                target = closest;
-                targetPlayer = closestIsPlayer;
-            }
+            if(!closest) return;
+            target = closest;
+            targetPlayer = closestIsPlayer;
         }
         
 
@@ -378,7 +370,10 @@ namespace Enemy
                 }
             }
         }
-
+        public int GetContactDamage()
+        {
+            return damage;
+        }
 
         public int GetCurrentHealth() => currentHealth;
         public int GetMaxHealth() => maxHealth;

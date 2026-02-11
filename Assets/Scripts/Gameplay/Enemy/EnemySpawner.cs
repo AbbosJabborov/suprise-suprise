@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy
+namespace Gameplay.Enemy
 {
     public class EnemySpawner : MonoBehaviour
     {
@@ -30,14 +30,13 @@ namespace Enemy
         [Header("Difficulty Scaling")]
         [SerializeField] private float healthScaling = 1.2f; // Health multiplier per wave
         [SerializeField] private float speedScaling = 1.1f; // Speed multiplier per wave
-        [SerializeField] private float damageScaling = 1.15f; // Damage multiplier per wave
+        //[SerializeField] private float damageScaling = 1.15f; // Damage multiplier per wave
     
         [Header("Object Pooling")]
         [SerializeField] private bool usePooling = true;
         [SerializeField] private int poolSizePerType = 20;
     
         [Header("UI/Debug")]
-        [SerializeField] private bool showDebugInfo = true;
     
         // Private variables
         private List<GameObject> activeEnemies = new List<GameObject>();
@@ -177,12 +176,12 @@ namespace Enemy
             }
         
             // Configure enemy
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            global::Gameplay.Enemy.Enemy enemyScript = enemy.GetComponent<global::Gameplay.Enemy.Enemy>();
             if (enemyScript != null)
             {
                 // Scale stats based on wave
                 int scaledHealth = Mathf.RoundToInt(enemyScript.GetMaxHealth() * Mathf.Pow(healthScaling, currentWave - 1));
-                float scaledSpeed = enemyScript.GetComponent<Enemy>().GetComponent<Rigidbody2D>().linearVelocity.magnitude * Mathf.Pow(speedScaling, currentWave - 1);
+                float scaledSpeed = enemyScript.GetComponent<global::Gameplay.Enemy.Enemy>().GetComponent<Rigidbody2D>().linearVelocity.magnitude * Mathf.Pow(speedScaling, currentWave - 1);
                 // You'll need to expose a GetDamage() method in Enemy script for this
                 // int scaledDamage = Mathf.RoundToInt(originalDamage * Mathf.Pow(damageScaling, currentWave - 1));
             

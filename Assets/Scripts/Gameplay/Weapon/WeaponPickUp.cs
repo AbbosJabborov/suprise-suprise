@@ -1,166 +1,117 @@
-using Gameplay.Player;
-using Player;
 using UnityEngine;
 
 namespace Gameplay.Weapon
 {
-    public class WeaponPickup : MonoBehaviour, IInteractable
+    [RequireComponent(typeof(Collider2D))]
+    public class WeaponPickup : MonoBehaviour
     {
         [Header("Weapon Data")]
         [SerializeField] private WeaponData weaponData;
-    
+        
         [Header("Visual")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private float bobSpeed = 2f;
         [SerializeField] private float bobHeight = 0.2f;
         [SerializeField] private float rotationSpeed = 90f;
-    
-        [Header("Drop Settings")]
-        [SerializeField] private bool wasDropped = false;
-        [SerializeField] private float dropForce = 5f;
-    
+        
         private Vector3 startPosition;
-        private Rigidbody2D rb;
-    
+        private float bobTimer;
+        
         void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
             if (spriteRenderer == null)
                 spriteRenderer = GetComponent<SpriteRenderer>();
         }
-    
+        
         void Start()
         {
             startPosition = transform.position;
-        
-            // Set visual to match weapon
-            if (weaponData != null && spriteRenderer != null && weaponData.WeaponSprite != null)
+            
+            if (weaponData != null && spriteRenderer != null)
             {
                 spriteRenderer.sprite = weaponData.WeaponSprite;
             }
         }
-    
+        
         void Update()
         {
-            // Floating animation (if not dropped)
-            if (!wasDropped || (rb != null && rb.linearVelocity.magnitude < 0.1f))
-            {
-                float bobOffset = Mathf.Sin(Time.time * bobSpeed) * bobHeight;
-                transform.position = new Vector3(
-                    transform.position.x, 
-                    startPosition.y + bobOffset, 
-                    transform.position.z
-                );
+            // Bob animation
+            bobTimer += Time.deltaTime * bobSpeed;
+            float bobOffset = Mathf.Sin(bobTimer) * bobHeight;
+            transform.position = new Vector3(startPosition.x, startPosition.y + bobOffset, startPosition.z);
             
-                // Rotation animation
-                transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-            }
+            // Rotation
+            transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
         }
-    
-        public void Interact(GameObject interactor)
-        {
-            WeaponInventory inventory = interactor.GetComponent<WeaponInventory>();
         
-            if (inventory != null && weaponData != null)
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
             {
-                // Try to add weapon to inventory
-                bool shouldDropWeapon = inventory.AddWeapon(weaponData);
-            
-                // If inventory was full, drop the replaced weapon
-                if (shouldDropWeapon && inventory.IsFull())
+                var player = other.GetComponent<Player.PlayerController>();
+                
+                if (player != null && player.Inventory != null)
                 {
-                    // Get the weapon that was just replaced (current weapon before we added new one)
-                    WeaponData droppedWeapon = null;
-                
-                    // Subscribe to drop event to get the weapon
-                    UnityEngine.Events.UnityAction<WeaponData> dropHandler = null;
-                    dropHandler = (weapon) =>
-                                  {
-                                      droppedWeapon = weapon;
-                                      inventory.OnWeaponDropped.RemoveListener(dropHandler);
-                                  };
-                
-                    inventory.OnWeaponDropped.AddListener(dropHandler);
-                
-                    // The AddWeapon already triggered the event, so droppedWeapon should be set
-                    if (droppedWeapon != null)
+                    bool wasDropped = player.Inventory.AddWeapon(weaponData);
+                    
+                    if (wasDropped)
                     {
-                        DropWeapon(droppedWeapon, interactor.transform.position);
+                        // Inventory was full, subscribe to drop event
+                        player.Inventory.OnWeaponDropped += DropWeapon;
                     }
+                    
+                    Destroy(gameObject);
                 }
-            
-                // Destroy this pickup
-                Destroy(gameObject);
             }
         }
-    
-        public string GetInteractionName()
-        {
-            return weaponData != null ? weaponData.WeaponName : "Unknown Weapon";
-        }
-    
-        public string GetInteractionPrompt()
-        {
-            return "Pick up";
-        }
-    
-        public bool CanInteract(GameObject interactor)
-        {
-            // Can interact if player has shooting component
-            return interactor.GetComponent<PlayerTopDownShooting>() != null;
-        }
-    
-        public Transform GetTransform()
-        {
-            return transform;
-        }
-    
-        void DropWeapon(WeaponData weapon, Vector3 dropPosition)
-        {
-            // Create weapon pickup at player's position
-            GameObject droppedWeapon = new GameObject($"Weapon_{weapon.WeaponName}");
-            droppedWeapon.transform.position = dropPosition;
         
-            // Add components
-            WeaponPickup pickup = droppedWeapon.AddComponent<WeaponPickup>();
-            pickup.weaponData = weapon;
-            pickup.wasDropped = true;
-        
-            SpriteRenderer sr = droppedWeapon.AddComponent<SpriteRenderer>();
-            sr.sprite = weapon.WeaponSprite;
-            sr.sortingOrder = -1; // Behind player
-        
-            CircleCollider2D col = droppedWeapon.AddComponent<CircleCollider2D>();
-            col.isTrigger = true;
-            col.radius = 0.5f;
-        
-            Rigidbody2D droppedRb = droppedWeapon.AddComponent<Rigidbody2D>();
-            droppedRb.gravityScale = 0;
-        
-            // Add random drop force
-            Vector2 randomDirection = Random.insideUnitCircle.normalized;
-            droppedRb.AddForce(randomDirection * dropForce, ForceMode2D.Impulse);
+        void DropWeapon(WeaponData droppedWeapon)
+        {
+            // Unsubscribe
+            var player = FindFirstObjectByType<Player.PlayerController>();
+            if (player != null)
+                player.Inventory.OnWeaponDropped -= DropWeapon;
+            
+            // Spawn dropped weapon
+            CreateWeaponPickup(droppedWeapon, transform.position);
         }
-    
+        
         public static GameObject CreateWeaponPickup(WeaponData weapon, Vector3 position)
         {
-            GameObject weaponObj = new GameObject($"Weapon_{weapon.WeaponName}");
-            weaponObj.transform.position = position;
-        
-            WeaponPickup pickup = weaponObj.AddComponent<WeaponPickup>();
+            GameObject pickupObj = new GameObject($"Weapon_{weapon.WeaponName}");
+            pickupObj.transform.position = position;
+            pickupObj.tag = "WeaponPickup";
+            
+            // Add WeaponPickup component
+            WeaponPickup pickup = pickupObj.AddComponent<WeaponPickup>();
             pickup.weaponData = weapon;
-        
-            SpriteRenderer sr = weaponObj.AddComponent<SpriteRenderer>();
+            
+            // Add SpriteRenderer
+            SpriteRenderer sr = pickupObj.AddComponent<SpriteRenderer>();
             sr.sprite = weapon.WeaponSprite;
-        
-            CircleCollider2D col = weaponObj.AddComponent<CircleCollider2D>();
+            sr.sortingOrder = -1;
+            
+            // Add collider
+            CircleCollider2D col = pickupObj.AddComponent<CircleCollider2D>();
             col.isTrigger = true;
             col.radius = 0.5f;
-        
-            Rigidbody2D rb = weaponObj.AddComponent<Rigidbody2D>();
+            
+            // Add Rigidbody2D (for trigger detection)
+            Rigidbody2D rb = pickupObj.AddComponent<Rigidbody2D>();
             rb.gravityScale = 0;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            
+            Debug.Log($"[WeaponPickup] Created pickup for {weapon.WeaponName}");
+            return pickupObj;
+        }
         
-            return weaponObj;
+        public void SetWeaponData(WeaponData data)
+        {
+            weaponData = data;
+            if (spriteRenderer != null && data != null)
+            {
+                spriteRenderer.sprite = data.WeaponSprite;
+            }
         }
     }
 }
